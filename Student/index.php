@@ -269,6 +269,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   <div class="content-wrapper mx-0">
     <section class="content m-0 p-0">
       <div class="container-fluid bg-light px-4 pt-4 pb-2">
+      <?php if ($status == 1): ?>
         <div class="card">
             <div class="card-body">
             <form name="studentform" onsubmit="return validateForm()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -594,6 +595,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                </form>
             </div>
         </div>
+        <?php else:?>
+        <div class="card">
+          <h1>لقد تم تدقيق استمارتك بنجاح</h1>
+        </div>
+        <?php endif; ?>
       </div>
     </section>
   </div>
