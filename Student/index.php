@@ -200,10 +200,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           
               
   if ($stmt = mysqli_prepare($link, $sql)) {
-    $here="وصل";
     if (mysqli_stmt_execute($stmt)) {
       // Redirect to login page
-      //header("location:./");
+      header("location:./");
     } else {
       echo "Oops! Something went wrong. Please try again later.";
     }
@@ -261,7 +260,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="content-wrapper mx-0">
       <section class="content m-0 p-0">
         <div class="container-fluid bg-light px-4 pt-4 pb-2">
-        <?php echo $here;?>
           <?php if (!isset($status) ||$status== 1) : ?>
             <div class="card">
               <div class="card-body">
