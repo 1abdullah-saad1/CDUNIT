@@ -7,6 +7,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+if ($_SESSION["userrole"] != 3) {
+  header("location: ../");
+  exit;
+}
+
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $sql = "INSERT INTO accountments (student_name, list_date, list_cost)

@@ -7,6 +7,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+if ($_SESSION["userrole"] != 4) {
+  header("location: ../");
+  exit;
+}
 
 ?>
 <!DOCTYPE html>
