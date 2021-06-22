@@ -298,18 +298,21 @@ if($_SESSION["userrole"]!=1)
       <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <h5 class="m-0 text-dark">معلومات البحث</h5> 
+            <hr>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="University">الجامعة</label> 
                             <input id="University" name="University" type="text" class="form-control" disabled value="جامعة الموصل">
                         </div> 
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="College">الكلية</label> 
                             <select id="College" name="College" type="text" class="form-control" >
-                                <option value="0"> اختر </option>
+                                <option value="0" hidden> اختر </option>
                                 <?php
                                       $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
                                       $query = 'SELECT * FROM `college`;';
@@ -317,7 +320,7 @@ if($_SESSION["userrole"]!=1)
                                           {
                                               while($row = mysqli_fetch_array($result))
                                               {
-                                                  echo "<option value=\"".$row['college_id']."\">".$row['college_name']."</option>";
+                                                  echo "<option value=\"".$row['college_id']."\" >".$row['college_name']."</option>";
                                               }
                                               mysqli_free_result($result);
                                               mysqli_close($link);                                            
@@ -326,7 +329,294 @@ if($_SESSION["userrole"]!=1)
                             </select>
                         </div> 
                     </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="Department">القسم</label> 
+                            <select id="Department" name="Department" type="text" class="form-control" >
+                                <option value="0" hidden> اختر </option>
+                                
+                            </select>
+                        </div> 
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="RTitel">عنوان الاطروحة /الرسالة /البحث</label> 
+                            <input id="RTitel" name="RTitel" type="text" class="form-control"  placeholder="العنوان">
+                        </div> 
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="RRegisterDate">تاريخ التسجيل</label> 
+                            <input id="RRegisterDate" name="RRegisterDate" type="date" class="form-control" >
+                        </div> 
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="ResearchNature">طبيعة البحث</label> 
+                            <input id="ResearchNature" name="ResearchNature" type="text" class="form-control" placeholder="طبيعة اللبحث" >
+                                
+                        </div> 
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="ResearchBenifit">الجهة المستفيدة</label> 
+                        <input id="ResearchBenifit" name="ResearchBenifit" type="text" class="form-control" placeholder="الجهة المستفيدة" >  
+                      </div> 
+                    </div>
+                </div>
+            <br>
+            <br>
+            <h5 class="m-0 text-dark">معلومات الطالب</h5> 
+              <hr>
+                <div class="row">
+                <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SName1">الاسم الاول</label> 
+                            <input id="SNAme1" name="SNAme1" type="text" class="form-control"  placeholder="الاسم الاول">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SName2">اسم الاب</label> 
+                            <input id="SName2" name="SNAme2" type="text" class="form-control"  placeholder="اسم الاب">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SName3">اسم الجد</label> 
+                            <input id="SName3" name="SNAme3" type="text" class="form-control"  placeholder="اسم الجد">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SName4">اسم اب الجد</label> 
+                            <input id="SName4" name="SNAme4" type="text" class="form-control"  placeholder="اسم اب الجد">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SName5">اللقب</label> 
+                            <input id="SName5" name="SNAme5" type="text" class="form-control"  placeholder="اللقب">
+                        </div> 
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
+
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                   <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SAge">العمر</label> 
+                            <input id="SAge" name="SAge" type="number" class="form-control"  placeholder="العمر">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="Sgender">الجنس</label> 
+                            <select id="Sgender" name="Sgender" type="number" class="form-control">
+                                  <option value="0" hidden>اختر</option>
+                                  <option value="1">ذكر</option>
+                                  <option value="2">انثى</option>
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SworkPlace">جهة الانتساب</label> 
+                            <input id="SworkPlace" name="SworkPlace" type="text" class="form-control" placeholder="جهة الانتساب">
+                                  
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SAcceptanceDate">تاريخ القبول</label> 
+                            <input id="SAcceptanceDate" name="SAcceptanceDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                                  
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SAcceptanceChanel">قناة القبول</label> 
+                            <select id="SAcceptanceChanel" name="SAcceptanceDate"  class="form-control">
+                                <option value="0" hidden>اختر</option>
+                            </select>  
+                        </div> 
+                    </div>
+                  <div class="col-sm-1"></div>                  
+                </div>
+                <div class="row">
+                 <div class="col-sm-1"></div>
+         
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SUniDate">تاريخ الامر الجامعي</label> 
+                            <input id="SUniDate" name="SUniDate" type="date" class="form-control"  >
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SCert">الشهادة</label> 
+                            <select id="SCert" name="SCert" type="number" class="form-control">
+                                  <option value="0" hidden>اختر</option>
+                                  <option value="1">ماجستير</option>
+                                  <option value="2">دكتوراة</option>
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SGSpitialty">الاختصاص العام</label> 
+                            <input id="SGSpitialty" name="SGSpitialty" type="text" class="form-control" placeholder="الاختصاص العام">
+                                  
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SSubSpitialty">الاختصاص الدقيق</label> 
+                            <input id="SSubSpitialty" name="SSubSpitialty" type="text" class="form-control" placeholder="الاختصاص الدقيق">
+                                  
+                        </div> 
+                    </div>
+                    
+                    <div class="col-sm-1"></div>
+
+                  
+                </div>
+            <br>
+            <br>
+            <h5 class="m-0 text-dark">معلومات المشرف</h5> 
+            <hr>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VName1">الاسم الاول</label> 
+                            <input id="VNAme1" name="VNAme1" type="text" class="form-control"  placeholder="الاسم الاول">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VName2">اسم الاب</label> 
+                            <input id="VName2" name="VNAme2" type="text" class="form-control"  placeholder="اسم الاب">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VName3">اسم الجد</label> 
+                            <input id="VName3" name="VNAme3" type="text" class="form-control"  placeholder="اسم الجد">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VName4">اسم اب الجد</label> 
+                            <input id="VName4" name="VNAme4" type="text" class="form-control"  placeholder="اسم اب الجد">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VName5">اللقب</label> 
+                            <input id="VName5" name="VNAme5" type="text" class="form-control"  placeholder="اللقب">
+                        </div> 
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
+
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                   <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VAge">العمر</label> 
+                            <input id="VAge" name="VAge" type="number" class="form-control"  placeholder="العمر">
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="Vgender">الجنس</label> 
+                            <select id="Vgender" name="Vgender" type="number" class="form-control">
+                                  <option value="0" hidden>اختر</option>
+                                  <option value="1">ذكر</option>
+                                  <option value="2">انثى</option>
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VworkPlace">جهة الانتساب</label> 
+                            <input id="VworkPlace" name="VworkPlace" type="text" class="form-control" placeholder="جهة الانتساب">
+                                  
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VCertSourc">الجهة المانحة للشهادة </label> 
+                            <input id="VCertSourc" name="VCertSourc" type="text" class="form-control" placeholder="الجهة المانحة للشهادة">
+                                  
+                        </div> 
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VcertDate">تاريخ الشهادة</label> 
+                            <input id="VcertDate" name="VcertDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                                  
+                        </div> 
+                    </div>
+                    
+                    
+                  <div class="col-sm-1"></div>                  
+                </div>
+                <div class="row">
+                 <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="VPromotionDate">تاريخ اخر ترقية</label> 
+                            <input id="VPromotionDate" name="VPromotionDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                                  
+                        </div> 
+                    </div>
+                                      
+                    <div class="col-sm-1"></div>
+
+                  
+                </div>
+                <br>
+            <br>
+            <h5 class="m-0 text-dark">الملخص</h5> 
+            <hr>
+            <div class="row">
+                 <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <textarea id="abstract" cols="30" rows="10" name="abstract" type="date" class="form-control" placeholder="تاريخ القبول">
+                            </textarea> 
+                        </div> 
+                    </div>
+                                      
+                    <div class="col-sm-1"></div>
+
+                  
+                </div>
+                <br><br>
+                <h5 class="m-0 text-dark">نسخة من الاطروحة</h5> 
+            <hr>
+            <div class="row">
+                 <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                          <input type="file" name="Research" id="Research">
+                        </div> 
+                    </div>
+                                      
+                    <div class="col-sm-1"></div>
+
+                  
+                </div>
+               </form>
             </div>
         </div>
       </div>
