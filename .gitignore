@@ -8,5 +8,5 @@ ModelIndex.xml
 ExportedFiles.xml
 
 # Ignore deployment files
-Uploades/
+Uploades/*.*
 # Force include portal SupportFiles
