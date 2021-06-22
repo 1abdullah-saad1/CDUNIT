@@ -28,98 +28,130 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/css/custom.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style type="text/css">
+    #overlay {background-color: rgba(0, 0, 0, 0.6);z-index: 999;position: absolute;left: 0;top: 0;width: 100%;height: 100%;display: none;}
+    #overlay div {position:absolute;left:50%;top:50%;margin-top:-32px;margin-left:-32px;}
+    .nav-link{font-size: 20px;}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).on("click", ".page", function(){
+                $.ajax({
+                        url: "getresult.php",
+                        type: "GET",
+                        data:  {page:$(this).attr("data-page")},
+                        beforeSend: function(){$("#overlay").show();},
+                        success: function(data)
+                        {
+                            $("#pagination-result").html(data);
+                            setInterval(function() {$("#overlay").hide(); },500);
+                        },
+                        error: function() 
+                        {}          
+                   });
+            });
+        });
+    </script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body >
 <div class="wrapper">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-0 " style="border-radius:0px;" >
     <ul class="navbar-nav">
-      
       <li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block">
+      <a href="#" class="nav-link">
+      <?php echo $_SESSION['username']; ?>
+      </a></li>
     </ul>
-  
+    <ul class="navbar-nav mr-auto-navbav">
+    <a class="nav-link" href="../Collage/pdf.php">تصدير المعلومات</a>
+    </ul>
     <ul class="navbar-nav mr-auto-navbav">
     <a class="nav-link" href="../logout.php">تسجيل الخروج</a>
     </ul>
   </nav>
-  <div class="content-wrapper mx-0" style="margin-top:3.5rem;">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h5 class="m-0 text-dark"><?php echo $_SESSION['username']; ?></h5>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="content-wrapper mx-0">
+  
     <section class="content">
       <div class="container-fluid">
-      <div class="card">
-
-			  <br>
-			  <br>
-			  <br>
+      <div class="card  my-4">
+      <br>
         <div class="card mx-4">
               <div class="card-header" >
                 <div class=" row align-items-start mr-2">
-                <h3 class="card-title" >جدول الاطاريح</h3>
+               <div  class="card-title"><h4>جدول الاطاريح</h4></div> 
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
-                <table class="table table-bordered">
+              <?php
+    require_once("dbclass.php");
+    require_once("pagination.class.php");
+    $dbConnection  = new Connection();
+    $perPage       = new sbpagination();
+    $sqlquery      = "SELECT * from college ";
+    $query         = $sqlquery."limit 0," . $perPage->perpage; 
+    $getData       = $dbConnection->runQuery($query);
+    $rowcount      = $dbConnection->numRows($sqlquery);
+    $showpagination = $perPage->getAllPageLinks($rowcount);
+    ?>
+ <div class="card-body mx-4">
+            <div id="pagination-result">
+            <table class="table table-bordered">
                   <thead>                  
-                    <tr>
+                    <tr class='bg-dark'>
                       <th style="width: 10px">#</th>
-                      <th>اسم الطالب</th>
-                      <th>المشرف</th>
-                      <th>عنوان الاطروحة</th>
-                      <th >العمليات</th>
+                      <th class='text-center' >اسم الطالب</th>
+                      <th class='text-center' >المشرف</th>
+                      <th class='text-center' >عنوان الاطروحة</th>
+                      <th class='text-center' style="width:15%;" >العمليات</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Update software</td>
-                      <td>Update software</td>
-                      <td>Update software</td>
-                      <td><button type="submit" class="btn btn-info">تأكيد</button>
-                      <button type="submit" class="btn btn-info">حذف</button>
-                      <button type="submit" class="btn btn-info">عرض</button>
-                      </td>
-                    </tr>
-                  </tbody>
+                    <tbody>
+                        <?php
+                        foreach ($getData as $data)
+                        {
+                            echo "<tr><td>".$data["college_id"]."</td>
+                            <td>".$data["college_name"]."</td>
+                            <td>Update software</td>
+                            <td>Update software</td>
+                            <td>
+                            <button type='submit' class='btn btn-info'>تأكيد</button>
+                            <button type='submit' class='btn btn-info'>حذف</button>
+                            <button type='submit' class='btn btn-info'>عرض</button>
+                            </td>
+                            <tr>
+                            ";
+                        }
+                        ?>
+                    </tbody>
                 </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">«</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-              </div>
+                <?php
+                if(!empty($showpagination))
+                {
+                    ?>
+                    <ul class="pagination">
+                        <?php echo $showpagination; ?>
+                    </ul>
+                    <?php
+                }
+                ?>
             </div>
-			  <br>
-			  <br>
-			  <br>
-			  <br>
+        </div>
+        </div>
         <br>
-			  <br>
-			  <br>
-			  <br>
-			  <br>
-            </div>
-      </div>
+        </div>
+        </div>
     </section>
   </div>
-  <footer class="main-footer mx-0">
+  <footer class="main-footer mx-0 px-4">
   <b>Version</b> 1.0
     <div class="float-right d-none d-sm-inline-block">
     <strong>Copyright &copy; 2020-2021 <a href="https://uomosul.edu.iq">University of Mosul</a></strong>
