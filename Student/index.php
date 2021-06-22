@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('" . $ID . "','"
     . $_SESSION["id"] . "','"
     . $_POST["College"] . "','"
-    . "0" . "','"
+    . $_POST["Department"] . "','"
     . $_POST["RTitel"] . "','"
     . $_POST["RRegisterDate"] . "','"
     . $_POST["ResearchNature"] . "','"
@@ -298,15 +298,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="col-sm-4">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="Department">القسم</label> 
-                            <select id="Department" name="Department" type="text" class="form-control" >
-                                <option value="0" hidden> اختر </option>
+                            <label for="Department">رقم الوصل</label> 
+                            <input id="Department" name="Department" type="text" class="form-control" placeholder="رقم الوصل" value="<?php echo $DeptId;?>" >
                                 
-                            </select>
                         </div> 
-                    </div> -->
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-12">
