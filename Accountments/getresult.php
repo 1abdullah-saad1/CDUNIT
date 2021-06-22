@@ -7,7 +7,7 @@ require_once("pagination.class.php");
 $dbConnection  = new Connection();
 $perPage       = new sbpagination();
 
-$sqlquery       = "SELECT * from accountments ";
+$sqlquery       = "SELECT * from accountments ORDER BY `id` DESC  ";
 
 $page = 1;
 if(!empty($_GET["page"])) {
@@ -35,6 +35,8 @@ $output .= ' <table class="table table-bordered">
 </tr>
 </thead>';
     $output .= '<tbody>';
+    if(isset($getData))
+    {
         foreach ($getData as $data)
         {
             $output .= "<tr>
@@ -47,6 +49,7 @@ $output .= ' <table class="table table-bordered">
             </td>
             <tr>";
         }
+    }
     $output .= '</tbody>';
 $output .= '</table>';
 if(!empty($showpagination))

@@ -172,7 +172,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     require_once("pagination.class.php");
     $dbConnection  = new Connection();
     $perPage       = new sbpagination();
-    $sqlquery      = "SELECT * from accountments ";
+    $sqlquery      = "SELECT * from accountments ORDER BY `id` DESC ";
     $query         = $sqlquery."limit 0," . $perPage->perpage; 
     $getData       = $dbConnection->runQuery($query);
     $rowcount      = $dbConnection->numRows($sqlquery);
@@ -192,6 +192,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                   </thead>
                     <tbody>
                         <?php
+                        if(isset($getData)){
                         foreach ($getData as $data)
                         {
                             echo "<tr>
@@ -204,7 +205,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             </td>
                             <tr>
                             ";
-                        }
+                        }}
                         ?>
                     </tbody>
                 </table>
