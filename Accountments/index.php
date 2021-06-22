@@ -19,6 +19,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
               .$_POST["list_date"]."','"
               .$_POST["list_cost"]."')";
     if ($link->query($sql)) {
+      $last_id = $link->insert_id;
+      $sql = "INSERT INTO users (username, password,Role,Collage) VALUES (?, ?,?,?)";
+      if($stmt = mysqli_prepare($link, $sql)){
+           
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "ssdd", $param_username, $param_password,$param_role,$param_collage);
+        
+        // Set parameters
+        $param_username = "user".$last_id;
+        $param_password = password_hash("user".$last_id, PASSWORD_DEFAULT); // Creates a password hash
+        $param_role=1;
+        $param_collage=1;
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            // Redirect to login page
+            header("location: ./");
+        } else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
         echo "New record created successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
