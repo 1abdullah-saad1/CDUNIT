@@ -26,13 +26,13 @@ $showpagination = $perPage->getAllPageLinks($rowcount);
 $output = '';
 $output .= ' <table class="table table-bordered">
 <thead>                  
-  <tr>
-    <th style="width: 10px">#</th>
-    <th>اسم الطالب</th>
-    <th>المشرف</th>
-    <th>عنوان الاطروحة</th>
-    <th >العمليات</th>
-  </tr>
+<tr class="bg-dark">
+<th style="width: 10px">#</th>
+<th class="text-center" >اسم الطالب</th>
+<th class="text-center" >المشرف</th>
+<th class="text-center" >عنوان الاطروحة</th>
+<th class="text-center" style="width:15%;" >العمليات</th>
+</tr>
 </thead>';
     $output .= '<tbody>';
         foreach ($getData as $data)
