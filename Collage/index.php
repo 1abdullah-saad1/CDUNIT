@@ -96,8 +96,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     require_once("pagination.class.php");
     $dbConnection  = new Connection();
     $perPage       = new sbpagination();
-    $sqlquery      = "SELECT * from college ";
+    $sqlquery      = "SELECT * FROM `studentforma` where `collegeId`='".$_SESSION["College"]."'";
     $query         = $sqlquery."limit 0," . $perPage->perpage; 
+   // echo($query);
     $getData       = $dbConnection->runQuery($query);
     $rowcount      = $dbConnection->numRows($sqlquery);
     $showpagination = $perPage->getAllPageLinks($rowcount);
@@ -118,14 +119,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <?php
                         foreach ($getData as $data)
                         {
-                            echo "<tr><td>".$data["college_id"]."</td>
-                            <td>".$data["college_name"]."</td>
-                            <td>Update software</td>
-                            <td>Update software</td>
+                            echo "<tr><td>".$data["id"]."</td>
+                            <td>".$data["SName1"]." ".$data["SName2"]." ".$data["SName3"]." ".$data["SName4"]." ".$data["SName5"]. "</td>
+                            <td>".$data["VName1"]." ".$data["VName2"]." ".$data["VName3"]." ".$data["VName4"]." ".$data["VName5"]. "</td>
+                            <td>".$data["RTitel"]."</td>
                             <td>
-                            <button type='submit' class='btn btn-info'>تأكيد</button>
-                            <button type='submit' class='btn btn-info'>حذف</button>
-                            <button type='submit' class='btn btn-info'>عرض</button>
+                            <a href=\"Submit.php?id=".$data["id"]."\" class='btn btn-info'>تأكيد</a>
+                            <a href=\"DelRes.php?id=".$data["id"]."\"class='btn btn-info'>حذف</a>
+                            <a href=\"View.php?id=".$data["id"]."\"class='btn btn-info'>عرض</a>
                             </td>
                             <tr>
                             ";
