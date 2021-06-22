@@ -7,6 +7,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+if ($_SESSION["userrole"] != 2) {
+  header("location: ../");
+  exit;
+}
 
 ?>
 <!DOCTYPE html>
@@ -96,7 +100,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     require_once("pagination.class.php");
     $dbConnection  = new Connection();
     $perPage       = new sbpagination();
-    $sqlquery      = "SELECT * FROM `studentforma` where `collegeId`='".$_SESSION["College"]."'";
+    $sqlquery      = "SELECT * FROM `studentforma` where `collegeId`='".$_SESSION["College"]."' AND `status`='1'";
     $query         = $sqlquery."limit 0," . $perPage->perpage; 
    // echo($query);
     $getData       = $dbConnection->runQuery($query);
@@ -117,6 +121,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                   </thead>
                     <tbody>
                         <?php
+                        if(isset($getData)){
                         foreach ($getData as $data)
                         {
                             echo "<tr><td>".$data["id"]."</td>
@@ -130,7 +135,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             </td>
                             <tr>
                             ";
-                        }
+                        }}
                         ?>
                     </tbody>
                 </table>
