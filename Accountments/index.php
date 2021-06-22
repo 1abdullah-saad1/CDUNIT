@@ -2,6 +2,7 @@
 require_once "../config.php";
 // Initialize the session
 session_start();
+
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
@@ -38,9 +39,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         } else{
             echo "Oops! Something went wrong. Please try again later.";
         }
+        header('Set-Cookie: fileLoading=true'); 
+
+        header("location: ./pdf.php?username=user".$last_id."&id=".$last_id."&date=".$_POST["list_date"]);
 
         // Close statement
         mysqli_stmt_close($stmt);
+
     }
         echo "New record created successfully";
     } else {
@@ -129,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
           
            <div class="col-sm-6"><div class="form-group">
                     <label for="exampleInputEmail1"> الأسم الكامل :</label>
-                    <input type="text" class="form-control" name="student_name" id="student_name"  placeholder="الأسم الكامل">
+                    <input type="text" class="form-control" name="student_name" id="student_name" required  placeholder="الأسم الكامل">
                   </div></div>
            <div class="col-sm-3"><div class="form-group">
                     <label for="exampleInputEmail1">تاريخ الوصل : </label>
@@ -241,8 +246,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   <aside class="control-sidebar control-sidebar-dark">
   </aside>
 </div>
-<script src="plugins/jquery/jquery.min.js"></script>
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -258,5 +263,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="../dist/js/adminlte.js"></script>
 <script src="../dist/js/demo.js"></script>
+<script src="../dist/js/jquery.cookie.js"></script>
+
+<script >
+setInterval(function(){
+  if ($.cookie("fileLoading")) {
+    // clean the cookie for future downoads
+    $.removeCookie("fileLoading");
+
+    //redirect
+    location.href = "./";
+  }
+},3000);
+</script>
 </body>
 </html>
