@@ -243,7 +243,7 @@ if (!empty($login_err)) {
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="register.php" >Sign Up</a>
+					
 				</div>
 				
 			</div>
