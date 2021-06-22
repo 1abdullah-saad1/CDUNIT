@@ -124,7 +124,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td>".$data["VName1"]." ".$data["VName2"]." ".$data["VName3"]." ".$data["VName4"]." ".$data["VName5"]. "</td>
                             <td>".$data["RTitel"]."</td>
                             <td>
-                            <a href=\"Submit.php?id=".$data["id"]."\" class='btn btn-info'>تأكيد</a>
+                            <a href=\"submit.php?id=".$data["id"]."\" class='btn btn-info'>تأكيد</a>
                             <a href=\"DelRes.php?id=".$data["id"]."\"class='btn btn-info'>حذف</a>
                             <a href=\"View.php?id=".$data["id"]."\"class='btn btn-info'>عرض</a>
                             </td>
