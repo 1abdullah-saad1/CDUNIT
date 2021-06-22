@@ -222,6 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>جامعة الموصل</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../plugins/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -238,6 +239,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+<div id="preloader">
+        <div class="loader_line"></div>
+    </div>
+    
   <div class="wrapper">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light  bg-dark mx-0">
       <ul class="navbar-nav">
@@ -261,11 +266,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <section class="content m-0 p-0">
         <div class="container-fluid bg-light px-4 pt-4 pb-2">
           <?php if (!isset($status) ||$status== 1) : ?>
-            <div class="card">
-              <div class="card-body">
+            <div class="card  bg-dark p-2">
+              <div class="card-body bg-light p-4">
                 <form name="studentform" onsubmit="return validateForm()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data" method="post">
-                  <h5 class="m-0 text-dark">معلومات البحث</h5>
-                  <hr>
+                  <h5 class="card-header bg-dark  m-1 mt-2 ">معلومات البحث</h5>
+            <div class="card-header p-4">
                   <div class="row">
                     <div class="col-sm-4">
                       <div class="form-group">
@@ -333,10 +338,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       </div>
                     </div>
                   </div>
-                  <br>
-                  <br>
-                  <h5 class="m-0 text-dark">معلومات الطالب</h5>
-                  <hr>
+                        </div>
+                  
+                  <h5 class="card-header bg-dark  m-1 mt-2 ">معلومات الطالب</h5>
+                  <div class="card-header p-4">
                   <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-2">
@@ -437,18 +442,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <div class="form-group">
                         <label for="SSubSpitialty">الاختصاص الدقيق</label>
                         <input id="SSubSpitialty" name="SSubSpitialty" type="text" class="form-control" placeholder="الاختصاص الدقيق" value="<?php echo ($SSubSpitialty == Null ? "" : $SSubSpitialty) ?>">
-
                       </div>
                     </div>
-
                     <div class="col-sm-1"></div>
-
-
                   </div>
-                  <br>
-                  <br>
-                  <h5 class="m-0 text-dark">معلومات المشرف</h5>
-                  <hr>
+                        </div>
+                 
+                        <h5 class="card-header bg-dark  m-1 mt-2 ">معلومات المشرف</h5>
+                  <div class="card-header p-4">
                   <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-2">
@@ -506,25 +507,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group">
                               <label for="VworkPlace">جهة الانتساب</label>
                               <input id="VworkPlace" name="VworkPlace" type="text" class="form-control" placeholder="جهة الانتساب" value="<?php echo ($VworkPlace == Null ? "" : $VworkPlace) ?>">
-
                             </div>
                       </div>
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label for="VCertSourc">الجهة المانحة للشهادة </label>
                           <input id="VCertSourc" name="VCertSourc" type="text" class="form-control" placeholder="الجهة المانحة للشهادة" value="<?php echo ($VCertSourc == Null ? "" : $VCertSourc) ?>">
-
                         </div>
                       </div>
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label for="VcertDate">تاريخ الشهادة</label>
                           <input id="VcertDate" name="VcertDate" type="date" class="form-control" placeholder="تاريخ القبول" value="<?php echo ($VcertDate == Null ? "" : $VcertDate) ?>">
-
                         </div>
                       </div>
-
-
                       <div class="col-sm-1"></div>
                     </div>
                     <div class="row">
@@ -533,50 +529,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                           <label for="VPromotionDate">تاريخ اخر ترقية</label>
                           <input id="VPromotionDate" name="VPromotionDate" type="date" class="form-control" placeholder="تاريخ القبول" value="<?php echo ($VPromotionDate == Null ? "" : $VPromotionDate) ?>">
-
                         </div>
                       </div>
-
                       <div class="col-sm-1"></div>
-
-
                     </div>
-                    <br>
-                    <br>
-                    <h5 class="m-0 text-dark">الملخص</h5>
-                    <hr>
+                        </div>
+                        <h5 class="card-header bg-dark  m-1 mt-2 ">الملخص</h5>
+                        <div class="card-header p-4">
                     <div class="row">
                       <div class="col-sm-1"></div>
                       <div class="col-sm-10">
                         <div class="form-group">
-                          <textarea id="abstract" cols="30" rows="10" name="abstract"  class="form-control" placeholder="" <?php echo ($abstract == Null ? "" : $abstract) ?></textarea>
+                          <textarea id="abstract" cols="30" rows="10" name="abstract"  class="form-control" placeholder=""> <?php echo ($abstract == Null ? "" : $abstract) ?></textarea>
                         </div>
                       </div>
-
                       <div class="col-sm-1"></div>
-
-
                     </div>
-                    <br><br>
-                    <h5 class="m-0 text-dark">نسخة من الاطروحة</h5>
-                    <hr>
+                    </div>
+                    <h5 class="card-header bg-dark  m-1 mt-2 ">نسخة من الاطروحة</h5>
+                    <div class="card-header p-4">
                     <div class="row">
                       <div class="col-sm-1"></div>
                       <div class="col-sm-10">
                         <div class="form-group">
-                        <?php if(isset($Researchurl)):?>
-                        <h5>تم تحميل الملف بنجاح </h5>
+                          <style>
+                        #ResearchFile {
+    display: none;
+    }
+
+.upload-btn {
+
+    display: block;
+    text-align: center;
+    margin: 20px auto 20px;
+    width: 50%;
+    height: 30px;
+    background-color: #fcff7f;
+    line-height: 30px;
+
+    }
+
+.upload-btn:hover {
+    background-color: #c3955a;
+    color: white;
+    cursor: pointer;
+    }
+  </style>
+ 
+
+
+                       
+                        <label class="upload-btn">
+  <input type="file" id="ResearchFile" onchange="changeText()" name="ResearchFile" id="ResearchFile" required />
+  <span id="selectedFileName"> <?php if(isset($Researchurl)):?>
+                        <h5>تم تحميل الملف بنجاح .. لتغيير الملف اضغط هنا</h5>
+                        <?php else : ?>
+                          <h5>اختر الملف</h5>
+                      
                         <?php endif;?>
-                          <input type="file" name="ResearchFile" id="ResearchFile" required>
-                        
+                      
+                      </span>
+</label>
+<script type="text/javascript">
+  function changeText() {
+    var y = document.getElementById("ResearchFile").value;
+    document.getElementById("selectedFileName").innerHTML = y;
+  }
+</script>
+
                         </div>
                       </div>
-
                       <div class="col-sm-1"></div>
-
-
                     </div>
-                    <button type="submit" onsubmit="return validateForm()" class="btn btn-primary">ارسال المعلومات</button>
+                    </div>
+                    <div class="card-footer">
+          <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+          <button type="submit" onsubmit="return validateForm()" class="btn btn-secondary btn-block">ارسال المعلومات</button>  
+          </div>
+          <div class="col-sm-4"></div>
+          </div>
+          </div>
+                    
                 </form>
               </div>
             </div>
@@ -598,6 +633,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <aside class="control-sidebar control-sidebar-dark">
     </aside>
   </div>
+  <script src="../plugins/js/jquery-v3.2.1.min.js"></script>
+    <script src="../plugins/js/main.js"></script>
   <script src="../plugins/jquery/jquery.min.js"></script>
   <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
   <script>
