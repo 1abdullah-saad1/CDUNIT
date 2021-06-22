@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_bind_result($stmt, $collegeCode);
         mysqli_stmt_fetch($stmt);
       }
-      mysqli_stmt_close($stmt);
+     // mysqli_stmt_close($stmt);
 
       $qury = "SELECT ifnull(max(`id`),'" . ($collegeCode . "0000000") . "')as ID FROM `studentforma` where `id`<='" . ($collegeCode . "9999999") . "' And `id`>='" . ($collegeCode . "0000000") . "';";
 
@@ -90,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $target_dir = "../Uploades/";
   $target_file = $target_dir .date("Y_m_d_H_i_s_").$_SESSION['username'].".pdf";//basename($_FILES["ResearchFile"]["name"]);
   move_uploaded_file($_FILES["ResearchFile"]["tmp_name"], $target_file);
-  $here = $target_file;
   $_FILEURL = $target_file;
   //mysqli_stmt_close($stmt);
 
@@ -162,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     . $_POST["VcertDate"] . "','"
     . $_POST["VPromotionDate"] . "','"
     . $_POST["abstract"] . "','"
-    . $_FILEURL . "','1')ON DUPLICATE KEY UPDATE 
+    . $_FILEURL . "','1') ON DUPLICATE KEY UPDATE 
               `collegeId`=VALUES(`collegeId`),
                           `DeptId`=VALUES(`DeptId`),
                           `RTitel`=VALUES(`RTitel`),
@@ -198,12 +197,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           `status`=VALUES(`status`);";
 
 
-
+                          
+              
   if ($stmt = mysqli_prepare($link, $sql)) {
-
+    $here="وصل";
     if (mysqli_stmt_execute($stmt)) {
       // Redirect to login page
-      header("location:./");
+      //header("location:./");
     } else {
       echo "Oops! Something went wrong. Please try again later.";
     }
@@ -261,8 +261,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="content-wrapper mx-0">
       <section class="content m-0 p-0">
         <div class="container-fluid bg-light px-4 pt-4 pb-2">
-          <h1><?php echo $here; ?></h1>
-          <?php if ($status == 1) : ?>
+        <?php echo $here;?>
+          <?php if (!isset($status) ||$status== 1) : ?>
             <div class="card">
               <div class="card-body">
                 <form name="studentform" onsubmit="return validateForm()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data" method="post">
@@ -507,7 +507,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <select id="Vgender" name="Vgender" type="number" class="form-control">
                           <option value="0" hidden <?php echo ($Vgender == Null ? "selected" : "") ?>>اختر</option>
                           <option value="1" <?php echo ($Vgender == 1 ? "selected" : "") ?>>ذكر</option>
-                          <option value="2" value="<?php echo ($Vgender == 2 ? "selected" : "") ?>>انثى</option>
+                          <option value="2" <?php echo ($Vgender == 2 ? "selected" : "") ?>>انثى</option>
                             </select>
                         </div> 
                     </div>
