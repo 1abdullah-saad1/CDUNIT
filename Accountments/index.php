@@ -1,13 +1,24 @@
 <?php
+require_once "../config.php";
 // Initialize the session
 session_start();
- 
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
-
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    $sql = "INSERT INTO accountments (student_name, list_date, list_cost)
+    VALUES ('".$_POST["student_name"]."','"
+              .$_POST["list_date"]."','"
+              .$_POST["list_cost"]."')";
+    if ($link->query($sql)) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,30 +90,32 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <div class="content-wrapper mx-0">
     <section class="content m-0 p-0">
       <div class="container-fluid bg-light px-4 pt-4 pb-2">
+      <form name="accountments"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="card">
             <div class="card-body px-0">
-           <div class="col-sm-12">
-           <div class="card bg-light p-4">
+            <div class="col-sm-3"></div>
+           <div class="col-sm-6">
+           <div class="card bg-dark p-4">
+           
            <div class="row">
-           <div class="col-sm-3"><div class="form-group">
-                    <label for="exampleInputEmail1">رقم الوصل : </label>
-                    <input type="number" class="form-control" id="exampleInputEmail1" placeholder="رقم الوصل">
-                  </div></div>
-           <div class="col-sm-3"><div class="form-group">
+          
+           <div class="col-sm-6"><div class="form-group">
                     <label for="exampleInputEmail1"> الأسم الكامل :</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="الأسم الكامل">
+                    <input type="text" class="form-control" name="student_name" id="student_name"  placeholder="الأسم الكامل">
                   </div></div>
            <div class="col-sm-3"><div class="form-group">
                     <label for="exampleInputEmail1">تاريخ الوصل : </label>
-                    <input type="date" class="form-control" id="exampleInputEmail1" placeholder="تاريخ الوصل">
+                    <input type="date" class="form-control" name="list_date" id="list_date" value="<?php echo date('Y-m-d');?>"  placeholder="تاريخ الوصل">
                   </div></div>
            <div class="col-sm-3">
            <div class="form-group">
                     <label for="exampleInputEmail1">المبلغ : </label>
-                    <input type="number" class="form-control" id="exampleInputEmail1" placeholder="المبلغ">
+                    <input type="number" class="form-control" name="list_cost" id="list_cost" value="3000" placeholder="المبلغ">
                   </div>
                   </div>
           </div>
+          <div class="col-sm-3"></div>
+
           <div class="card-footer">
           <div class="row">
           <div class="col-sm-4"></div>
@@ -114,6 +127,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
            </div>
             </div>
         </div>
+        </form>
       </div>
       <div class="container-fluid">
       <div class="card  my-4">
@@ -130,7 +144,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     require_once("pagination.class.php");
     $dbConnection  = new Connection();
     $perPage       = new sbpagination();
-    $sqlquery      = "SELECT * from college ";
+    $sqlquery      = "SELECT * from accountments ";
     $query         = $sqlquery."limit 0," . $perPage->perpage; 
     $getData       = $dbConnection->runQuery($query);
     $rowcount      = $dbConnection->numRows($sqlquery);
@@ -141,8 +155,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <table class="table table-bordered">
                   <thead>                  
                     <tr class='bg-dark'>
-                      <th style="width: 10px">#</th>
-                      <th class='text-center' >رقم الوصل</th>
+                      <th class='text-center' style="width:10%;" >رقم الوصل</th>
                       <th class='text-center' >الأسم الكامل</th>
                       <th class='text-center' >تاريخ الوصل</th>
                       <th class='text-center' >المبلغ</th>
@@ -153,11 +166,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <?php
                         foreach ($getData as $data)
                         {
-                            echo "<tr><td>".$data["college_id"]."</td>
-                            <td>".$data["college_name"]."</td>
-                            <td>Update software</td>
-                            <td>Update software</td>
-                            <td>Update software</td>
+                            echo "<tr>
+                            <td class='text-center' >".$data["id"]."</td>
+                            <td class='text-center' >".$data["student_name"]."</td>
+                            <td class='text-center' >".$data["list_date"]."</td>
+                            <td class='text-center' >".$data["list_cost"]."</td>
                             <td>
                             <button type='submit' class='btn btn-info btn-block'>حذف</button>
                             </td>

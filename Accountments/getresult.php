@@ -7,7 +7,7 @@ require_once("pagination.class.php");
 $dbConnection  = new Connection();
 $perPage       = new sbpagination();
 
-$sqlquery       = "SELECT * from college";
+$sqlquery       = "SELECT * from accountments ";
 
 $page = 1;
 if(!empty($_GET["page"])) {
@@ -27,7 +27,6 @@ $output = '';
 $output .= ' <table class="table table-bordered">
 <thead>                  
 <tr class="bg-dark">
-<th style="width: 10px">#</th>
 <th class="text-center" >رقم الوصل</th>
 <th class="text-center" >الأسم الكامل</th>
 <th class="text-center" >تاريخ الوصل</th>
@@ -38,10 +37,11 @@ $output .= ' <table class="table table-bordered">
     $output .= '<tbody>';
         foreach ($getData as $data)
         {
-            $output .= "<tr><td>".$data['college_id']."</td><td>".$data['college_name']."</td>
-            <td>Update software</td>
-            <td>Update software</td>
-            <td>Update software</td>
+            $output .= "<tr>
+            <td class='text-center' >".$data["id"]."</td>
+            <td class='text-center' >".$data["student_name"]."</td>
+            <td class='text-center' >".$data["list_date"]."</td>
+            <td class='text-center' >".$data["list_cost"]."</td>
             <td>
             <button type='submit' class='btn btn-info btn-block'>حذف</button>
             </td>
