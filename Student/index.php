@@ -14,6 +14,78 @@ if($_SESSION["userrole"]!=1)
     header("location: ../");
     exit;
 }
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  $qury="select `CollageCode` from `college` where `college_id`=".$_POST["College"].";";
+  if($stmt = mysqli_prepare($link, $qury))
+  {
+    if(mysqli_stmt_execute($stmt))
+    {
+      mysqli_stmt_bind_result($stmt,$collegeCode);
+    }
+    mysqli_stmt_close($stmt);
+
+    $qury="SELECT ifnull(max(`id`),'".($collegeCode."0000000")."')as ID FROM `users` where `id`<'".($collegeCode."9999999")."' And `id`>'".($collegeCode."0000000")."';";
+    if($stmt = mysqli_prepare($link, $qury))
+      {
+        if(mysqli_stmt_execute($stmt))
+        { 
+           mysqli_stmt_bind_result($stmt,$ID);
+        } 
+      }
+      $ID=((int)$ID)+1;
+      $_FILEURL="hibone";
+      mysqli_stmt_close($stmt);
+      $sql = "INSERT INTO `studentforma`(`id`,    `user_id`,`collegeId`,`DeptId`,                 `RTitel`, `RRegisterDate`, `ResearchNature`, `ResearchBenifit`, `SName1`, `SName2`, `SName3`, `SName4`, `SName5`, `SAge`, `Sgender`, `SworkPlace`, `SAcceptanceDate`, `SUniDate`, `SCert`, `SGSpitialty`, `SSubSpitialty`, `VName1`, `VName2`, `VName3`, `VName4`, `VName5`, `VAge`, `Vgender`, `VworkPlace`, `VCertSourc`, `VcertDate`, `VPromotionDate`, `abstract`, `Researchurl`, `status`) 
+                VALUES ('".$ID."','"
+                .$_SESSION["id"]."','"
+                .$_POST["College"]."','"
+                .$_POST["Department"]."','"
+                .$_POST["RTitel"]."','"
+                .$_POST["RRegisterDate"]."','"
+                .$_POST["ResearchNature"]."','"
+                .$_POST["ResearchBenifit"]."','"
+                .$_POST["SName1"]."','"
+                .$_POST["SNAme2"]."','"
+                .$_POST["SName3"]."','"
+                .$_POST["SName4"]."','"
+                .$_POST["SName5"]."','"
+                .$_POST["SAge"]."','"
+                .$_POST["Sgender"]."','"
+                .$_POST["SworkPlace"]."','"
+                .$_POST["SAcceptanceDate"]."','"
+                .$_POST["SUniDate"]."','"
+                .$_POST["SCert"]."','"
+                .$_POST["SGSpitialty"]."','"
+                .$_POST["SSubSpitialty"]."','"
+                .$_POST["VName1"]."','"
+                .$_POST["VName2"]."','"
+                .$_POST["VName3"]."','"
+                .$_POST["VName4"]."','"
+                .$_POST["VName5"]."','"
+                .$_POST["VAge"]."','"
+                .$_POST["Vgender"]."','"
+                .$_POST["VworkPlace"]."','"
+                .$_POST["VCertSourc"]."','"
+                .$_POST["VcertDate"]."','"
+                .$_POST["VcertDate"]."','"
+                .$_POST["VCertSourc"]."','"
+                .$_POST["VPromotionDate"]."','"
+                .$_POST["abstract"]."','"
+                .$_FILEURL."')";
+      if($stmt = mysqli_prepare($link, $sql)){
+      if(mysqli_stmt_execute($stmt)){
+        // Redirect to login page
+        echo"ok";
+
+    } else{
+        echo "Oops! Something went wrong. Please try again later.";
+    }}
+
+  }
+  mysqli_close($link);
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -35,6 +107,7 @@ if($_SESSION["userrole"]!=1)
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/css/custom.css">
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -52,7 +125,7 @@ if($_SESSION["userrole"]!=1)
     </ul>
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" type="search" placeholder ="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
@@ -298,7 +371,7 @@ if($_SESSION["userrole"]!=1)
       <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form name="studentform" onsubmit="return validateForm()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <h5 class="m-0 text-dark">معلومات البحث</h5> 
             <hr>
                 <div class="row">
@@ -311,7 +384,7 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="College">الكلية</label> 
-                            <select id="College" name="College" type="text" class="form-control" >
+                            <select id="College" name="College" type="text" class="form-control" min="1" >
                                 <option value="0" hidden> اختر </option>
                                 <?php
                                       $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -343,7 +416,7 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="RTitel">عنوان الاطروحة /الرسالة /البحث</label> 
-                            <input id="RTitel" name="RTitel" type="text" class="form-control"  placeholder="العنوان">
+                            <input id="RTitel" name="RTitel" type="text" class="form-control"  placeholder ="العنوان">
                         </div> 
                     </div>
                    
@@ -358,14 +431,14 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="ResearchNature">طبيعة البحث</label> 
-                            <input id="ResearchNature" name="ResearchNature" type="text" class="form-control" placeholder="طبيعة اللبحث" >
+                            <input id="ResearchNature" name="ResearchNature" type="text" class="form-control" placeholder ="طبيعة اللبحث" >
                                 
                         </div> 
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label for="ResearchBenifit">الجهة المستفيدة</label> 
-                        <input id="ResearchBenifit" name="ResearchBenifit" type="text" class="form-control" placeholder="الجهة المستفيدة" >  
+                        <input id="ResearchBenifit" name="ResearchBenifit" type="text" class="form-control" placeholder ="الجهة المستفيدة" >  
                       </div> 
                     </div>
                 </div>
@@ -378,31 +451,31 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SName1">الاسم الاول</label> 
-                            <input id="SNAme1" name="SNAme1" type="text" class="form-control"  placeholder="الاسم الاول">
+                            <input id="SName1" name="SName1" type="text" class="form-control"  placeholder ="الاسم الاول">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SName2">اسم الاب</label> 
-                            <input id="SName2" name="SNAme2" type="text" class="form-control"  placeholder="اسم الاب">
+                            <input id="SName2" name="SNAme2" type="text" class="form-control"  placeholder ="اسم الاب">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SName3">اسم الجد</label> 
-                            <input id="SName3" name="SNAme3" type="text" class="form-control"  placeholder="اسم الجد">
+                            <input id="SName3" name="SName3" type="text" class="form-control"  placeholder ="اسم الجد">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SName4">اسم اب الجد</label> 
-                            <input id="SName4" name="SNAme4" type="text" class="form-control"  placeholder="اسم اب الجد">
+                            <input id="SName4" name="SName4" type="text" class="form-control"  placeholder ="اسم اب الجد">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SName5">اللقب</label> 
-                            <input id="SName5" name="SNAme5" type="text" class="form-control"  placeholder="اللقب">
+                            <input id="SName5" name="SName5" type="text" class="form-control"  placeholder ="اللقب">
                         </div> 
                     </div>
                 </div>
@@ -413,7 +486,7 @@ if($_SESSION["userrole"]!=1)
                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SAge">العمر</label> 
-                            <input id="SAge" name="SAge" type="number" class="form-control"  placeholder="العمر">
+                            <input id="SAge" name="SAge" type="number" class="form-control"  placeholder ="العمر">
                         </div> 
                     </div>
                     <div class="col-sm-2">
@@ -429,14 +502,14 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SworkPlace">جهة الانتساب</label> 
-                            <input id="SworkPlace" name="SworkPlace" type="text" class="form-control" placeholder="جهة الانتساب">
+                            <input id="SworkPlace" name="SworkPlace" type="text" class="form-control" placeholder ="جهة الانتساب">
                                   
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SAcceptanceDate">تاريخ القبول</label> 
-                            <input id="SAcceptanceDate" name="SAcceptanceDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                            <input id="SAcceptanceDate" name="SAcceptanceDate" type="date" class="form-control" placeholder ="تاريخ القبول">
                                   
                         </div> 
                     </div>
@@ -472,14 +545,14 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SGSpitialty">الاختصاص العام</label> 
-                            <input id="SGSpitialty" name="SGSpitialty" type="text" class="form-control" placeholder="الاختصاص العام">
+                            <input id="SGSpitialty" name="SGSpitialty" type="text" class="form-control" placeholder ="الاختصاص العام">
                                   
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SSubSpitialty">الاختصاص الدقيق</label> 
-                            <input id="SSubSpitialty" name="SSubSpitialty" type="text" class="form-control" placeholder="الاختصاص الدقيق">
+                            <input id="SSubSpitialty" name="SSubSpitialty" type="text" class="form-control" placeholder ="الاختصاص الدقيق">
                                   
                         </div> 
                     </div>
@@ -497,31 +570,31 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VName1">الاسم الاول</label> 
-                            <input id="VNAme1" name="VNAme1" type="text" class="form-control"  placeholder="الاسم الاول">
+                            <input id="VName1" name="VName1" type="text" class="form-control"  placeholder ="الاسم الاول">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VName2">اسم الاب</label> 
-                            <input id="VName2" name="VNAme2" type="text" class="form-control"  placeholder="اسم الاب">
+                            <input id="VName2" name="VName2" type="text" class="form-control"  placeholder ="اسم الاب">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VName3">اسم الجد</label> 
-                            <input id="VName3" name="VNAme3" type="text" class="form-control"  placeholder="اسم الجد">
+                            <input id="VName3" name="VName3" type="text" class="form-control"  placeholder ="اسم الجد">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VName4">اسم اب الجد</label> 
-                            <input id="VName4" name="VNAme4" type="text" class="form-control"  placeholder="اسم اب الجد">
+                            <input id="VName4" name="VName4" type="text" class="form-control"  placeholder ="اسم اب الجد">
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VName5">اللقب</label> 
-                            <input id="VName5" name="VNAme5" type="text" class="form-control"  placeholder="اللقب">
+                            <input id="VName5" name="VName5" type="text" class="form-control"  placeholder ="اللقب">
                         </div> 
                     </div>
                 </div>
@@ -532,7 +605,7 @@ if($_SESSION["userrole"]!=1)
                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VAge">العمر</label> 
-                            <input id="VAge" name="VAge" type="number" class="form-control"  placeholder="العمر">
+                            <input id="VAge" name="VAge" type="number" class="form-control"  placeholder ="العمر">
                         </div> 
                     </div>
                     <div class="col-sm-2">
@@ -548,21 +621,21 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VworkPlace">جهة الانتساب</label> 
-                            <input id="VworkPlace" name="VworkPlace" type="text" class="form-control" placeholder="جهة الانتساب">
+                            <input id="VworkPlace" name="VworkPlace" type="text" class="form-control" placeholder ="جهة الانتساب">
                                   
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VCertSourc">الجهة المانحة للشهادة </label> 
-                            <input id="VCertSourc" name="VCertSourc" type="text" class="form-control" placeholder="الجهة المانحة للشهادة">
+                            <input id="VCertSourc" name="VCertSourc" type="text" class="form-control" placeholder ="الجهة المانحة للشهادة">
                                   
                         </div> 
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VcertDate">تاريخ الشهادة</label> 
-                            <input id="VcertDate" name="VcertDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                            <input id="VcertDate" name="VcertDate" type="date" class="form-control" placeholder ="تاريخ القبول">
                                   
                         </div> 
                     </div>
@@ -575,7 +648,7 @@ if($_SESSION["userrole"]!=1)
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="VPromotionDate">تاريخ اخر ترقية</label> 
-                            <input id="VPromotionDate" name="VPromotionDate" type="date" class="form-control" placeholder="تاريخ القبول">
+                            <input id="VPromotionDate" name="VPromotionDate" type="date" class="form-control" placeholder ="تاريخ القبول">
                                   
                         </div> 
                     </div>
@@ -592,7 +665,7 @@ if($_SESSION["userrole"]!=1)
                  <div class="col-sm-1"></div>
                     <div class="col-sm-10">
                         <div class="form-group">
-                            <textarea id="abstract" cols="30" rows="10" name="abstract" type="date" class="form-control" placeholder="تاريخ القبول">
+                            <textarea id="abstract" cols="30" rows="10" name="abstract" type="date" class="form-control" placeholder ="تاريخ القبول">
                             </textarea> 
                         </div> 
                     </div>
@@ -616,6 +689,7 @@ if($_SESSION["userrole"]!=1)
 
                   
                 </div>
+                <button type="submit" onsubmit="return validateForm()" class="btn btn-primary">ارسال المعلومات</button>
                </form>
             </div>
         </div>
@@ -632,8 +706,8 @@ if($_SESSION["userrole"]!=1)
   <aside class="control-sidebar control-sidebar-dark">
   </aside>
 </div>
-<script src="plugins/jquery/jquery.min.js"></script>
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -649,5 +723,19 @@ if($_SESSION["userrole"]!=1)
 <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="../dist/js/adminlte.js"></script>
 <script src="../dist/js/demo.js"></script>
+<script>
+  function validateForm() {
+     let flag=false;
+     let x = document.forms["studentform"]["SName1"];
+     if(x="")
+     {
+      x.classList.add('is-invalid');
+     }
+    console.log(x);
+     
+  return true;
+}
+
+</script>
 </body>
 </html>
