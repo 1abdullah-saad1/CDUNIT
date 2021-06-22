@@ -72,6 +72,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       </a></li>
     </ul>
     <ul class="navbar-nav mr-auto-navbav">
+    <a class="nav-link" href="../Collage/pdf.php">تصدير المعلومات</a>
+    </ul>
+    <ul class="navbar-nav mr-auto-navbav">
     <a class="nav-link" href="../logout.php">تسجيل الخروج</a>
     </ul>
   </nav>
