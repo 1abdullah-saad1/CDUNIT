@@ -556,8 +556,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <div class="col-sm-1"></div>
                       <div class="col-sm-10">
                         <div class="form-group">
-                          <textarea id="abstract" cols="30" rows="10" name="abstract" type="date" class="form-control" placeholder="تاريخ القبول" value="<?php echo ($abstract == Null ? "" : $abstract) ?>">
-                            </textarea>
+                          <textarea id="abstract" cols="30" rows="10" name="abstract"  class="form-control" placeholder="تاريخ القبول" ><?php echo ($abstract == Null ? "" : $abstract) ?></textarea>
                         </div>
                       </div>
 
