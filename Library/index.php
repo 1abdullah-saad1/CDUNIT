@@ -97,7 +97,8 @@ if ($_SESSION["userrole"] != 4) {
     require_once("pagination.class.php");
     $dbConnection  = new Connection();
     $perPage       = new sbpagination();
-    $sqlquery      = "SELECT * from studentforma ";
+    $sql = "SELECT id,  college.college_name as Colname,  RTitel, SName1, SName2, SName3, SName4, SName5,VName1, VName2, VName3, VName4, VName5, Researchurl FROM studentforma INNER JOIN College ON  studentforma.collegeId=college.college_id where studentforma.status='2' ";
+    $sqlquery      = $sql;//"SELECT * from studentforma where `studentforma`.`status`";
     $query         = $sqlquery."limit 0," . $perPage->perpage; 
     $getData       = $dbConnection->runQuery($query);
     $rowcount      = $dbConnection->numRows($sqlquery);
@@ -120,7 +121,7 @@ if ($_SESSION["userrole"] != 4) {
                         foreach ($getData as $data)
                         {
                            
-                            echo "<tr><td>".$data["collegeId"]."</td>
+                            echo "<tr><td>".$data["Colname"]."</td>
                             <td>".$data['SName1']." ".$data['SName2']." ".$data['SName3']." ".$data['SName4']." ".$data['SName5']."</td>
                             <td>".$data['VName1']." ".$data['VName2']." ".$data['VName3']." ".$data['VName4']." ".$data['VName5']."</td>
                             <td>".$data['RTitel']."</td>
