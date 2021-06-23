@@ -65,23 +65,25 @@ if ($stmt = mysqli_prepare($link, $qury)) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (!isset($id)) {
-    $qury = "select `CollageCode` from `college` where `college_id`=" . $_POST["College"] . ";";
+    $qury = "select `CollageCode` from `college` where `college_id`='". $_POST["College"]."';";
 
     if ($stmt = mysqli_prepare($link, $qury)) {
       if (mysqli_stmt_execute($stmt)) {
         mysqli_stmt_bind_result($stmt, $collegeCode);
         mysqli_stmt_fetch($stmt);
       }
-     // mysqli_stmt_close($stmt);
+      mysqli_stmt_close($stmt);
 
       $qury = "SELECT ifnull(max(`id`),'" . ($collegeCode . "0000000") . "')as ID FROM `studentforma` where `id`<='" . ($collegeCode . "9999999") . "' And `id`>='" . ($collegeCode . "0000000") . "';";
-
       if ($stmt = mysqli_prepare($link, $qury)) {
+        $here=$qury;
+
         if (mysqli_stmt_execute($stmt)) {
           mysqli_stmt_bind_result($stmt, $ID);
           mysqli_stmt_fetch($stmt);
         }
       }
+      mysqli_stmt_close($stmt);
       $ID = ((int)$ID) + 1;
     }
   } else {
