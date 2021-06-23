@@ -35,6 +35,7 @@ $output .= ' <table class="table table-bordered">
 </tr>
 </thead>';
     $output .= '<tbody>';
+    if(isset($getData)){
         foreach ($getData as $data)
         {
             $output .= "<tr><td>".$data['collegeId']."</td>
@@ -55,6 +56,7 @@ $output .= ' <table class="table table-bordered">
             readfile($file);
              }
          }
+        }
         ?>
     $output .= '</tbody>';
 $output .= '</table>';

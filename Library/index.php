@@ -65,15 +65,15 @@ if ($_SESSION["userrole"] != 4) {
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-0 " style="border-radius:0px;" >
     <ul class="navbar-nav">
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+      <a href="#" class="nav-link text-white">اسم المستخدم : </a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">
       <?php echo $_SESSION['username']; ?>
       </a></li>
+    </ul>
+    <ul class="navbar-nav mr-auto-navbav ">
+    <a class="nav-link text-white" href="#"style="font-size:26px;">صفحة المكتبة</a>
     </ul>
     <ul class="navbar-nav mr-auto-navbav">
     <a class="nav-link" href="../logout.php">تسجيل الخروج</a>
@@ -118,6 +118,7 @@ if ($_SESSION["userrole"] != 4) {
                   </thead>
                     <tbody>
                         <?php
+                         if(isset($getData)){
                         foreach ($getData as $data)
                         {
                            
@@ -138,7 +139,7 @@ if ($_SESSION["userrole"] != 4) {
                             header("Content-Disposition: attachment; filename=\"$file\"");
                             readfile($file);
                              }
-                         }
+                         }}
                         ?>
                     </tbody>
                 </table>
