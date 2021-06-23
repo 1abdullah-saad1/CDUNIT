@@ -206,7 +206,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             <td class='text-center' >".$data["list_date"]."</td>
                             <td class='text-center' >".$data["list_cost"]."</td>
                             <td>
-                            <button type='submit' class='btn btn-info btn-block'>حذف</button>
+                            <a href=\"./delaco.php?id=".$data["id"]."\" class='btn btn-info btn-block'>حذف</a>
                             </td>
                             <tr>
                             ";
