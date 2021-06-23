@@ -103,20 +103,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 </head>
 <body >
 <div class="wrapper">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-0 " style="border-radius:0px;" >
-    <ul class="navbar-nav">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-0  " style="border-radius:0px;" >
+    <ul class="navbar-nav ">
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link text-white">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link text-white">Contact</a>
+        <a href="#" class="nav-link text-white">اسم المستخدم : </a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link text-white">
       <?php echo $_SESSION['username']; ?>
       </a></li>
     </ul>
-    <ul class="navbar-nav mr-auto-navbav">
+    <ul class="navbar-nav mr-auto-navbav ">
+    <a class="nav-link text-white" href="#"style="font-size:26px;">صفحة الحسابات</a>
+    </ul>
+    <ul class="navbar-nav mr-auto-navbav ">
     <a class="nav-link text-white" href="../logout.php">تسجيل الخروج</a>
     </ul>
   </nav>
