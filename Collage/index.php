@@ -75,7 +75,9 @@ if ($_SESSION["userrole"] != 2) {
       <?php echo $_SESSION['username']; ?>
       </a></li>
     </ul>
-    
+    <ul class="navbar-nav mr-auto-navbav ">
+    <a class="nav-link text-white" href="#"style="font-size:26px;"><?php echo($_SESSION["FullName"])?></a>
+    </ul>
     <ul class="navbar-nav mr-auto-navbav">
     <a class="nav-link" href="../logout.php">تسجيل الخروج</a>
     </ul>
