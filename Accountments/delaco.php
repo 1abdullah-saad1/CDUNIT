@@ -14,8 +14,18 @@ $sql="DELETE FROM `accountments` WHERE `id`='".$_GET["id"]."';";
 if ($stmt = mysqli_prepare($link, $sql)) {
   if (mysqli_stmt_execute($stmt))
   {
+      
+  }
+
+}
+$sql="DELETE FROM `users` WHERE `username`='user".$_GET["id"]."';";
+//var_dump($sql);
+if ($stmt = mysqli_prepare($link, $sql)) {
+  if (mysqli_stmt_execute($stmt))
+  {
       header("location: ./");
   }
+  
 }
 
 ?>
